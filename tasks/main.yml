@@ -8,3 +8,12 @@
   include: "Fedora.yml"
   when: ansible_distribution == 'Fedora'
   tags: ["packages","dropbox"]
+
+- name: make hidden dropbox directory
+  file: path=~/.dropbox-data state=directory
+
+- name: link to hidden dropbox directory
+  file:
+    state: link
+    src: ~/.dropbox-data/Dropbox
+    dest: ~/dropbox

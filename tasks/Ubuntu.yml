@@ -4,3 +4,5 @@
 
 - name: Install Ubuntu dropbox package
   apt: deb={{dropbox_tmp_deb}}
+  sudo: yes
+  notify: run dropbox installer
