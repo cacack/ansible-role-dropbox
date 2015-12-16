@@ -1,8 +1,16 @@
 ---
+
+- name: Check if Dropbox is already installed
+  stat:
+    path: /usr/bin/dropbox
+  register: dropbox_binary
+
 - name: Download Ubuntu dropbox package
   get_url: url={{ dropbox_url_ubuntu_deb }} dest={{dropbox_tmp_deb}}
+  when: not dropbox_binary.stat.exists
 
 - name: Install Ubuntu dropbox package
   apt: deb={{dropbox_tmp_deb}}
   sudo: yes
   notify: run dropbox installer
+  when: not dropbox_binary.stat.exists
