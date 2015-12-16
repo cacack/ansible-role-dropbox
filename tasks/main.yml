@@ -11,9 +11,11 @@
 
 - name: make hidden dropbox directory
   file: path=~/.dropbox-data state=directory
+  tags: [ "dropbox" ]
 
 - name: link to hidden dropbox directory
   file:
     state: link
     src: ~/.dropbox-data/Dropbox
     dest: ~/dropbox
+  tags: [ "dropbox" ]
