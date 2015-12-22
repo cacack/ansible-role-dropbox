@@ -1,21 +1,29 @@
 ---
-- name: install dropbox for Ubuntu family
-  include: "Ubuntu.yml"
+
+- name: Check if Dropbox is already installed
+  stat:
+    path: /usr/bin/dropbox
+  register: dropbox_binary
+  tags: [ "packages", "dropbox" ]
+
+- name: Install dropbox for distribution Ubuntu
+  include: "ubuntu.yml"
   when: ansible_distribution == 'Ubuntu'
-  tags: ["packages","dropbox"]
+  tags: [ "packages", "dropbox" ]
 
-- name: install dropbox for Fedora family
-  include: "Fedora.yml"
+- name: Install dropbox for distribution Fedora
+  include: "fedora.yml"
   when: ansible_distribution == 'Fedora'
-  tags: ["packages","dropbox"]
+  tags: [ "packages", "dropbox" ]
 
-- name: make hidden dropbox directory
+- name: Make hidden dropbox directory
   file: path=~/.dropbox-data state=directory
   tags: [ "dropbox" ]
 
-- name: link to hidden dropbox directory
+- name: Link to hidden dropbox directory
   file:
     state: link
     src: ~/.dropbox-data/Dropbox
     dest: ~/dropbox
+    force: yes
   tags: [ "dropbox" ]

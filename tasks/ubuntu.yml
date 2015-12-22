@@ -1,0 +1,11 @@
+---
+
+- name: Download Dropbox DEB package
+  get_url: url={{dropbox_url_ubuntu_deb}} dest={{dropbox_tmp_deb}}
+  when: not dropbox_binary.stat.exists
+
+- name: Install Dropbox DEB package
+  apt: deb={{dropbox_tmp_deb}}
+  sudo: yes
+  notify: run dropbox installer
+  when: not dropbox_binary.stat.exists

@@ -1,0 +1,7 @@
+---
+
+- name: Install Dropbox RPM package
+  dnf: name={{dropbox_url_fedora_rpm}}
+  sudo: yes
+  notify: run dropbox installer
+  when: not dropbox_binary.stat.exists
